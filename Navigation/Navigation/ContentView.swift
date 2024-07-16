@@ -23,8 +23,10 @@ struct DetailView: View {
 struct ContentView: View {
     var body: some View {
         NavigationStack {
-            NavigationLink("Tap me") {
-                DetailView(number: 102)
+            List(0..<100) { index in
+                NavigationLink("Tap index \(index)") {
+                    DetailView(number: index)
+                }
             }
         }
     }
