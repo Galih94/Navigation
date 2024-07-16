@@ -7,27 +7,42 @@
 
 import SwiftUI
 
+struct Student: Hashable {
+    let id: UUID = UUID()
+    let name: String
+    let number: Int
+}
+
 struct DetailView: View {
-    var number: Int
+    var student: Student
     
     var body: some View {
-        Text("Detail view: \(number)")
+        VStack {
+            Text(student.name)
+            Text("\(student.number)")
+        }
+        
     }
     
-    init(number: Int) {
-        self.number = number
-        print("creating detail view: \(number)")
+    init(student: Student) {
+        self.student = student
+        print("creating detail view: \(student)")
     }
 }
 
 struct ContentView: View {
+    let students: [Student] = [
+        Student(name: "Galih", number: 1),
+        Student(name: "Samodra", number: 2),
+        Student(name: "Wicaksono", number: 3)
+    ]
     var body: some View {
         NavigationStack {
-            List(0..<100) { index in
-                NavigationLink("select \(index)", value: index)
+            ForEach(students, id: \.id) { student in
+                NavigationLink("Select student \(student.name)", value: student)
             }
-            .navigationDestination(for: Int.self) { selectonIndex in
-                DetailView(number: selectonIndex)
+            .navigationDestination(for: Student.self) { selectonStudent in
+                DetailView(student: selectonStudent)
             }
         }
     }
