@@ -24,9 +24,10 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             List(0..<100) { index in
-                NavigationLink("Tap index \(index)") {
-                    DetailView(number: index)
-                }
+                NavigationLink("select \(index)", value: index)
+            }
+            .navigationDestination(for: Int.self) { selectonIndex in
+                DetailView(number: selectonIndex)
             }
         }
     }
