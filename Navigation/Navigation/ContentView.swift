@@ -15,7 +15,7 @@ struct Student: Hashable {
 
 @Observable
 class PathStore {
-    var path: NavigationPath {
+    var path: [Int] {
         didSet {
             save()
         }
@@ -25,16 +25,16 @@ class PathStore {
     
     init() {
         if let data = try? Data(contentsOf: savePath) {
-            if let decoded = try? JSONDecoder().decode(NavigationPath.CodableRepresentation.self, from: data) {
-                path = NavigationPath(decoded)
+            if let decoded = try? JSONDecoder().decode([Int].self, from: data) {
+                path = decoded
                 return
             }
         }
-        self.path = NavigationPath()
+        self.path = []
     }
     
     func save() {
-        guard let representation = path.codable else { return }
+        let representation = path
         do {
             let encoded = try JSONEncoder().encode(representation)
             try encoded.write(to: savePath)
@@ -46,7 +46,7 @@ class PathStore {
 }
 
 struct DetailView: View {
-    @Binding var path: NavigationPath
+    @Binding var path: [Int]
     var number: Int
     
     var body: some View {
@@ -54,7 +54,7 @@ struct DetailView: View {
             .navigationTitle("Number: \(number)")
             .toolbar {
                 Button("Home") {
-                    path = NavigationPath()
+                    path.removeAll()
                 }
             }
     }
