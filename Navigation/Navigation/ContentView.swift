@@ -14,35 +14,22 @@ struct Student: Hashable {
 }
 
 struct DetailView: View {
-    var student: Student
+    var number: Int
     
     var body: some View {
-        VStack {
-            Text(student.name)
-            Text("\(student.number)")
-        }
-        
-    }
-    
-    init(student: Student) {
-        self.student = student
-        print("creating detail view: \(student)")
+        NavigationLink("Go to random number 1 - 1000", value: Int.random(in: 1...1000))
+            .navigationTitle("Number: \(number)")
     }
 }
 
 struct ContentView: View {
-    @State private var path = NavigationPath()
+    @State private var path = [Int]()
     var body: some View {
         NavigationStack(path: $path) {
-            Text("Hello")
-            .toolbar {
-                Button("push number 1") {
-                    path.append(1)
+            DetailView(number: 0)
+                .navigationDestination(for: Int.self) { pathInt in
+                    DetailView(number: pathInt)
                 }
-                Button("push string hello") {
-                    path.append("hello")
-                }
-            }
         }
     }
 }
