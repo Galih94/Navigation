@@ -17,6 +17,7 @@ struct ContentView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.blue, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
+            .toolbar(.hidden)
         }
         
     }
