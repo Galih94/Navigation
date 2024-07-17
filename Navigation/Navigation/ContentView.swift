@@ -31,8 +31,35 @@ struct DetailView: View {
 }
 
 struct ContentView: View {
+    @State private var path = [Int]()
     var body: some View {
-        Text("hello world")
+        
+        NavigationStack(path: $path) {
+            VStack {
+                Button("show 32") {
+                    path = [32]
+                }
+                
+                Button("show 64") {
+                    path.append(64)
+                }
+                
+                Button("show 32 then 64") {
+                    path = [32, 64]
+                }
+                
+                Button("show 2 then 10") {
+                    path = [2, 10]
+                }
+                
+                Button("show 72") {
+                    path.append(72)
+                }
+            }
+            .navigationDestination(for: Int.self) { selection in
+                Text("Selected \(selection)")
+            }
+        }
     }
 }
 
