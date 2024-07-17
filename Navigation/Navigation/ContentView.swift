@@ -14,10 +14,8 @@ struct ContentView: View {
                 Text("Hello world \(i)")
             }
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
+                ToolbarItemGroup(placement: .topBarLeading) {
                     Button("1") {}
-                }
-                ToolbarItem(placement: .topBarLeading) {
                     Button("2") {}
                 }
             }
