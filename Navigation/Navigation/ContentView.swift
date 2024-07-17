@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var title = "SwiftUI"
     var body: some View {
-        Text("Hello world")
+        NavigationStack {
+            Text("Hello world")
+                .navigationTitle($title)
+                .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }
 
