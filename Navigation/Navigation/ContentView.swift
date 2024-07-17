@@ -14,11 +14,17 @@ struct Student: Hashable {
 }
 
 struct DetailView: View {
+    @Binding var path: [Int]
     var number: Int
     
     var body: some View {
         NavigationLink("Go to random number 1 - 1000", value: Int.random(in: 1...1000))
             .navigationTitle("Number: \(number)")
+            .toolbar {
+                Button("Home") {
+                    path.removeAll()
+                }
+            }
     }
 }
 
@@ -26,9 +32,9 @@ struct ContentView: View {
     @State private var path = [Int]()
     var body: some View {
         NavigationStack(path: $path) {
-            DetailView(number: 0)
+            DetailView(path: $path, number: 0)
                 .navigationDestination(for: Int.self) { pathInt in
-                    DetailView(number: pathInt)
+                    DetailView(path: $path, number: pathInt)
                 }
         }
     }
