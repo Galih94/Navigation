@@ -15,6 +15,7 @@ struct ContentView: View {
             }
             .navigationTitle("Title")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(.green)
         }
         
     }
