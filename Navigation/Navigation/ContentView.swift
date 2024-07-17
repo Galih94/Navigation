@@ -14,11 +14,17 @@ struct ContentView: View {
                 Text("Hello world \(i)")
             }
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("leading") {}
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("confirm") {}
                 }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("trailing") {}
+                ToolbarItem(placement: .destructiveAction) {
+                    Button("destroy") {}
+                }
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("cancel") {}
+                }
+                ToolbarItem(placement: .navigation) {
+                    Button("nav") {}
                 }
             }
         }
