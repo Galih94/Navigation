@@ -13,11 +13,14 @@ struct ContentView: View {
             List(0..<100) { i in
                 Text("Hello world \(i)")
             }
-            .navigationTitle("Title")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(.blue, for: .navigationBar)
-            .toolbarColorScheme(.dark, for: .navigationBar)
-            .toolbar(.hidden)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("leading") {}
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("trailing") {}
+                }
+            }
         }
         
     }
