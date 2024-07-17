@@ -9,7 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello world")
+        NavigationStack {
+            List(0..<100) { i in
+                Text("Hello world \(i)")
+            }
+            .navigationTitle("Title")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+        
     }
 }
 
