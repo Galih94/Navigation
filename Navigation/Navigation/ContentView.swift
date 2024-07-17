@@ -31,36 +31,23 @@ struct DetailView: View {
 }
 
 struct ContentView: View {
-    @State private var path = [Int]()
     var body: some View {
         
-        NavigationStack(path: $path) {
-            VStack {
-                Button("show 32") {
-                    path = [32]
+        NavigationStack() {
+            List {
+                ForEach(0..<5) { i in
+                    NavigationLink("select number \(i)", value: i)
                 }
                 
-                Button("show 64") {
-                    path.append(64)
-                }
-                
-                Button("show 32 then 64") {
-                    path = [32, 64]
-                }
-                
-                Button("show 2 then 10") {
-                    path = [2, 10]
-                }
-                
-                Button("show 72") {
-                    path.append(72)
+                ForEach(0..<5) { i in
+                    NavigationLink("select string \(i)", value: "\(i)")
                 }
             }
             .navigationDestination(for: Int.self) { selection in
-                Text("Selected \(selection)")
-                Button("show 100") {
-                    path.append(100)
-                }
+                Text("Selected number \(selection)")
+            }
+            .navigationDestination(for: String.self) { selection in
+                Text("Selected string \(selection)")
             }
         }
     }
