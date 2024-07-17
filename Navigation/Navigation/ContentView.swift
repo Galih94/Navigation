@@ -13,6 +13,38 @@ struct Student: Hashable {
     let number: Int
 }
 
+@Observable
+class PathStore {
+    var path: NavigationPath {
+        didSet {
+            save()
+        }
+    }
+    
+    private let savePath = URL.documentsDirectory.appending(path: "SavedPath")
+    
+    init() {
+        if let data = try? Data(contentsOf: savePath) {
+            if let decoded = try? JSONDecoder().decode(NavigationPath.CodableRepresentation.self, from: data) {
+                path = NavigationPath(decoded)
+                return
+            }
+        }
+        self.path = NavigationPath()
+    }
+    
+    func save() {
+        guard let representation = path.codable else { return }
+        do {
+            let encoded = try JSONEncoder().encode(representation)
+            try encoded.write(to: savePath)
+            
+        } catch {
+            print("failed load data - \(error)")
+        }
+    }
+}
+
 struct DetailView: View {
     @Binding var path: NavigationPath
     var number: Int
@@ -29,12 +61,12 @@ struct DetailView: View {
 }
 
 struct ContentView: View {
-    @State private var path = NavigationPath()
+    @State private var pathStore = PathStore()
     var body: some View {
-        NavigationStack(path: $path) {
-            DetailView(path: $path, number: 0)
+        NavigationStack(path: $pathStore.path) {
+            DetailView(path: $pathStore.path, number: 0)
                 .navigationDestination(for: Int.self) { pathInt in
-                    DetailView(path: $path, number: pathInt)
+                    DetailView(path: $pathStore.path, number: pathInt)
                 }
         }
     }
