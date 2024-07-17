@@ -14,7 +14,7 @@ struct Student: Hashable {
 }
 
 struct DetailView: View {
-    @Binding var path: [Int]
+    @Binding var path: NavigationPath
     var number: Int
     
     var body: some View {
@@ -22,14 +22,14 @@ struct DetailView: View {
             .navigationTitle("Number: \(number)")
             .toolbar {
                 Button("Home") {
-                    path.removeAll()
+                    path = NavigationPath()
                 }
             }
     }
 }
 
 struct ContentView: View {
-    @State private var path = [Int]()
+    @State private var path = NavigationPath()
     var body: some View {
         NavigationStack(path: $path) {
             DetailView(path: $path, number: 0)
