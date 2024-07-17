@@ -58,6 +58,9 @@ struct ContentView: View {
             }
             .navigationDestination(for: Int.self) { selection in
                 Text("Selected \(selection)")
+                Button("show 100") {
+                    path.append(100)
+                }
             }
         }
     }
